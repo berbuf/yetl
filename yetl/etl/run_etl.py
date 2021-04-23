@@ -17,4 +17,4 @@ def run_etl_(etl):
     for k, f in steps:
         flow, out = f(flow, etl[k])
         out_flow += out
-    return out_flow
+    return flow, out_flow

@@ -1,6 +1,6 @@
 import pandas as pd
 
-from yetl import run_etl
+from yetl.yetl import run_etl
 
 
 def get_df():

@@ -1,5 +1,5 @@
 
-import yetl
+from yetl import yetl
 
 
 # path
