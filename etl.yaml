@@ -1,4 +1,5 @@
 ---
+engine: pandas
 file_in:
   - path: ./path.csv
     format: csv
