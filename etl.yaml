@@ -1,0 +1,40 @@
+---
+file_in:
+  - path: ./path.csv
+    format: csv
+    sep: ","
+  - name: col_1
+    domain: str upper
+    in: A B D
+    comment: this is a comment
+  - name: col_2
+    domain: str float_fr
+  - name: col_3
+    domain: float
+  - name: col_4
+    domain: int positive
+file_out:
+  - postgres: connection_id
+  - table_def: ./path.sql
+  - name: key
+    domain: str
+    from: A
+  - name: size_B
+    domain: int
+    from: len_b
+  - name: size_C
+    domain: int positive
+    from: len_C
+  - name: mean_B
+    domain: float
+  - name: mean_C
+    domain: float
+steps:
+  - select: col_1 col_2 col_3
+    as: A B C
+  - apply: str_to_float fr_format
+    on: B
+  - groupby: A
+  - apply: len mean_p90
+    on: B C
+    as: len_B mean_B len_C mean_C
