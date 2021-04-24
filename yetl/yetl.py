@@ -31,6 +31,5 @@ def run_etl(yaml_path="etl.yaml"):
         etl = get_json(yaml_path)
         etl = resolve_etl(etl)  # compile
         flow, out = run_etl_(etl)  # run
-        print(flow)
     except Exception as e:
         print(e)

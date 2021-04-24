@@ -1,4 +1,5 @@
 ---
+engine: pandas
 file_in:
   - path: ./path.csv
     format: csv
@@ -32,9 +33,10 @@ file_out:
 steps:
   - select: col_1 col_2 col_3
     as: A B C
-  - apply: str_to_float fr_format
-    on: B
+  - apply: fr_format str_to_float
+    to: B
   - groupby: A
-  - apply: len mean_p90
-    on: B C
+  - aggregation: len mean_p90
+    to: B C
     as: len_B mean_B len_C mean_C
+  - filter: positive

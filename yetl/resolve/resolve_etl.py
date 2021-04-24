@@ -1,12 +1,9 @@
 
 from .file_in import resolve_in
+from .steps import resolve_steps
 
 
 def resolve_out(block):
-    pass
-
-
-def resolve_steps(block):
     pass
 
 

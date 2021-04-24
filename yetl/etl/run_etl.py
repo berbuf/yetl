@@ -1,11 +1,8 @@
 from .file_in import run_file_in
+from .steps import run_steps
 
 
 def run_file_out(flow, process):
-    return flow, []
-
-
-def run_steps(flow, process):
     return flow, []
 
 
