@@ -26,6 +26,18 @@ def get_json(yaml_path):
         return yaml.safe_load(f)
 
 
+def p_(e, tab=""):
+    if isinstance(e, dict):
+        for z in e:
+            print(tab, z)
+            p_(e[z], tab + "\t")
+    elif isinstance(e, list):
+        for z in e:
+            p_(z, tab)
+    else:
+        print(tab, e)
+
+
 def run_etl(yaml_path="etl.yaml"):
     try:
         etl = get_json(yaml_path)

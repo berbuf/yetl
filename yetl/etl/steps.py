@@ -1,6 +1,8 @@
 import pandas as pd
 import numpy as np
 
+import yetl.etl.run_etl as run_etl
+
 pd.set_option('mode.chained_assignment', None)
 
 
@@ -10,6 +12,24 @@ def select(flow, elem):
     flow = flow[elem["select"]]
     flow.columns = elem["as"]
     return flow, []
+
+
+def where(flow, elem):
+    cond = np.array([True] * len(flow))
+    for src in elem["to"]:
+        for f in elem["where"]:
+            cond &= flow[src].apply(f).values
+    return flow[cond], []
+
+
+def filter_(flow, elem):
+    track_out = []
+    for src in elem["to"]:
+        integrity = flow[src].apply(
+            lambda x: run_etl.integrity_track(x, elem["filter"]))
+        flow, out = run_etl.two_tracks(flow, src, "filter", integrity)
+        track_out += out
+    return flow, track_out
 
 
 def apply(flow, elem):
@@ -29,7 +49,6 @@ def aggregation(flow, elem):
         for f in elem["aggregation"]:
             flow[elem["as"][index_dest]] = flow[src].apply(f)
             index_dest += 1
-    print(flow)
     return flow, []
 
 
@@ -45,6 +64,8 @@ def groupby(flow, elem):
 
 fct_map = {
     "select": select,
+    "where": where,
+    "filter": filter_,
     "apply": apply,
     "aggregation": aggregation,
     "groupby": groupby,
@@ -56,4 +77,4 @@ def run_steps(flow, process):
     for elem in process:
         key = list(elem)[0]
         flow, out = fct_map[key](flow, elem)
-    return flow, []
+    return flow, out

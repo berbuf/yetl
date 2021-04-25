@@ -1,5 +1,6 @@
 import pandas as pd
-import numpy as np
+
+import yetl.etl.run_etl as run_etl
 
 
 def init_flow(process):
@@ -11,31 +12,16 @@ def init_flow(process):
     return flow
 
 
-def domain_check(x, process) -> (bool, [str]):
-    ret, track = True, ""
-    for f in process["domain"] + ([process["in"]] if "in" in process else []):
-        if ret:
-            track = "{}{}/".format(track, f.__name__)
-        ret &= type(x) == f if isinstance(f, type) else f(x)
-    return ret, track
-
-
-def two_tracks(flow, col, integrity):
-    cond, log = list(zip(*integrity))
-    cond = np.array(cond)
-    out_col = [col] * sum(~cond)
-    out_val = flow[col][~cond].values
-    out_log = np.array(log)[~cond]
-    return flow[cond], list(zip(out_col, out_val, out_log))
-
-
 def integrity_check(flow, process):
     track_out = []
-    for col in [e for e in process if "name" in e]:
-        if col["name"] not in flow.columns:
+    for elem in process:
+        if "name" not in elem:
+            continue
+        if elem["name"] not in flow.columns:
             pass  # raise error
-        integrity = flow[col["name"]].apply(lambda x: domain_check(x, col))
-        flow, out = two_tracks(flow, col["name"], integrity)
+        integrity = flow[elem["name"]].apply(
+            lambda x: run_etl.integrity_track(x, elem["domain"]))
+        flow, out = run_etl.two_tracks(flow, elem["name"], "domain", integrity)
         track_out += out
     return flow, track_out
 

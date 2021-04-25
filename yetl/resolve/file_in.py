@@ -1,4 +1,3 @@
-
 from yetl import yetl
 
 
@@ -33,6 +32,8 @@ def parse_domain(elem):
     f_ = []
     for f in elem["domain"].split(" "):
         f_ += [yetl.get_fct("domains", f)]
+    if "in" in elem:
+        f_ += [lambda x: x in elem["in"].split(" ")]
     return f_
 
 
@@ -42,8 +43,7 @@ def parse_in(elem):
     type_ = elem["domain"].split(" ")[0]
     if type_ not in ["str"]:  # only str for now
         pass  # raise error
-    type_ = __builtins__[type_]
-    return lambda x: x in elem["in"].split(" ")
+    return None
 
 
 def parse_comment(elem):
