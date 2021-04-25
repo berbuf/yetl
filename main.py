@@ -21,6 +21,7 @@ run_etl()
 """
     X steps
     X add filter, where
+    setup.py
     file out
     type checking
     add errors

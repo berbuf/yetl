@@ -1,11 +1,10 @@
 import yaml
 
-from .resolve.resolve_etl import resolve_etl
-from .etl.run_etl import run_etl_
+from yetl.resolve.resolve_etl import resolve_etl
+from yetl.etl.run_etl import run_etl_
 
-
-from .yetl_functions import domains
-from .yetl_functions import steps
+from yetl.yetl_functions import domains
+from yetl.yetl_functions import steps
 import_map = {
     "domains": domains,
     "steps": steps,
@@ -42,6 +41,8 @@ def run_etl(yaml_path="etl.yaml"):
     try:
         etl = get_json(yaml_path)
         etl = resolve_etl(etl)  # compile
+        p_(etl)
         flow, out = run_etl_(etl)  # run
+        print(flow)
     except Exception as e:
         print(e)
