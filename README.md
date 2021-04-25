@@ -1,8 +1,8 @@
 # yetl
 ETL as Yaml
 #
-##### Control a full ETL code with complex domain constraints
+##### Control a full ETL code with domain constraints, complex aggregations and quality checkpoints as a configuration file
 #
-##### Remove and track down data that fail to pass the constraints  
+##### Remove and track down data that fail to pass constraints  
 #
-##### Add your custom constraints and transformations as a simple function and a line in a yaml 
+##### Add your custom constraints and transformations as simply as adding a function in a file and a line in a yaml 
