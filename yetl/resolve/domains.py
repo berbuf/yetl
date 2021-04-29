@@ -82,6 +82,8 @@ def parse_name(elem):
 
 
 def parse_domain(elem):
+    # at least one type
+    # first type has to be a python type
     f_ = []
     for f in elem["domain"].split(" "):
         f_ += [yetl.get_fct("domains", f)]

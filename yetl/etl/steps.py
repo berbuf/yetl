@@ -77,4 +77,5 @@ def run_steps(flow, process):
     for elem in process:
         key = list(elem)[0]
         flow, out = fct_map[key](flow, elem)
-    return flow, out
+        track_out += out
+    return flow, track_out
