@@ -22,12 +22,12 @@ def where(flow, elem):
     return flow[cond], []
 
 
-def filter_(flow, elem):
+def check(flow, elem):
     track_out = []
     for src in elem["to"]:
         integrity = flow[src].apply(
-            lambda x: run_etl.integrity_track(x, elem["filter"]))
-        flow, out = run_etl.two_tracks(flow, src, "filter", integrity)
+            lambda x: run_etl.integrity_track(x, elem["check"]))
+        flow, out = run_etl.two_tracks(flow, src, "check", integrity)
         track_out += out
     return flow, track_out
 
@@ -65,7 +65,7 @@ def groupby(flow, elem):
 fct_map = {
     "select": select,
     "where": where,
-    "filter": filter_,
+    "check": check,
     "apply": apply,
     "aggregation": aggregation,
     "groupby": groupby,

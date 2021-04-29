@@ -38,11 +38,25 @@ def p_(e, tab=""):
 
 
 def run_etl(yaml_path="etl.yaml"):
+    # get schema => resolve
+    # get_dataset(self, namespace_name, dataset_name)
+
+    # get job (if not create it)
+    # create run
+    # complete or fail
+
     try:
         etl = get_json(yaml_path)
         etl = resolve_etl(etl)  # compile
-        p_(etl)
+        # type check here
         flow, out = run_etl_(etl)  # run
+        """
+        return
         print(flow)
+        import pandas as pd
+        df = pd.DataFrame(
+            out, columns=["column", "value", "step_global", "step_local"])
+        print(df)
+        """
     except Exception as e:
         print(e)

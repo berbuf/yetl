@@ -23,7 +23,7 @@ def parse_as(elem, key_word):
     return dest
 
 
-# apply, aggregation, where, filter
+# apply, aggregation, where, check
 ###
 def parse_fct(elem, key_word):
     f_ = []
@@ -68,8 +68,8 @@ type_elem = {
         "where": lambda x: parse_fct(x, "where"),
         "to": parse_to
     },
-    "filter": {
-        "filter": lambda x: parse_fct(x, "filter"),
+    "check": {
+        "check": lambda x: parse_fct(x, "check"),
         "to": parse_to
     },
     "apply": {

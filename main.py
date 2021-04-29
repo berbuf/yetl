@@ -1,3 +1,8 @@
+#from marquez_client import MarquezClient
+
+#client = MarquezClient(url='http://localhost:5000')
+#e = client.list_namespaces()
+
 import pandas as pd
 
 from yetl.yetl import run_etl
@@ -15,14 +20,18 @@ def get_df():
 
 df = get_df()
 df.to_csv("./path.csv", sep=",")
-run_etl()
+# run_etl("etl_marquez.yaml")
+run_etl("etl.yaml")
 
 # TODO
 """
     X steps
-    X add filter, where
-    setup.py
-    file out
+    X add check, where
+    X setup.py
+    X file out
+    move in out connectors to folder
+    marquez
+    add options
     type checking
     add errors
 """

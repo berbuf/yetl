@@ -1,0 +1,27 @@
+---
+engine: pandas
+file_in:
+  - options: take_all
+  - marquez:
+    name: job_1
+    namespace: test
+    dataset: test
+file_out:
+  - options: dump_all create
+  - marquez:
+    name: job_1
+    namespace: test
+    dataset: test_res
+steps:
+  - select: col_1 col_2 col_3
+    as: A B C
+  - apply: fr_format str_to_float
+    to: B
+  - where: positive rounded_even
+    to: B C
+  - groupby: A
+  - aggregation: len mean_p90
+    to: B C
+    as: len_B mean_B len_C mean_C
+  - check: positive rounded_even
+    to: len_B

@@ -1,6 +1,7 @@
 ---
 engine: pandas
 file_in:
+  - options: take_select
   - path: ./path.csv
     format: csv
     sep: ","
@@ -15,14 +16,18 @@ file_in:
   - name: col_4
     domain: int positive
 file_out:
-  - postgres: connection_id
-  - table_def: ./path.sql
+  - options: dump_select
+  - postgres:
+    connection: "host=localhost port=5432 dbname=db_user user=user password=password"
+    table: test
+    create: True
+    conflict_keys: key
   - name: key
     domain: str
     from: A
   - name: size_B
     domain: int
-    from: len_b
+    from: len_B
   - name: size_C
     domain: int positive
     from: len_C
@@ -41,5 +46,5 @@ steps:
   - aggregation: len mean_p90
     to: B C
     as: len_B mean_B len_C mean_C
-  - filter: positive rounded_even
+  - check: positive rounded_even
     to: len_B

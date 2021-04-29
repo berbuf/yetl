@@ -1,6 +1,6 @@
 import numpy as np
 
-from .file_in import run_file_in
+from .in_out import run_file_in, run_file_out
 from .steps import run_steps
 
 
@@ -23,16 +23,11 @@ def two_tracks(flow, col, step, integrity):
     return flow[cond], list(zip(out_col, out_val, out_step, out_log))
 
 
-def run_file_out(flow, process):
-    return flow, []
-
-
 def run_etl_(etl):
-    steps = [("file_in", run_file_in),
-             ("steps", run_steps),
-             ("file_out", run_file_out)]
     out_flow, flow = [], None
-    for k, f in steps:
+    for k, f in [("file_in", run_file_in),
+                 ("steps", run_steps),
+                 ("file_out", run_file_out)]:
         flow, out = f(flow, etl[k])
         out_flow += out
     return flow, out_flow
